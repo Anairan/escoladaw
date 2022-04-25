@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
 use App\Models\Curso;
-use illuminate\Supporte\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class AlunoController extends Controller
 {
@@ -21,7 +21,6 @@ class AlunoController extends Controller
     {
         $aluno = new Aluno();
 		$alunos = $this->listaAlunos();
-		$alunos = Aluno::All();
 		$cursos = Curso::All();
 		return view("aluno.index", [
 			"aluno" => $aluno,
@@ -47,6 +46,11 @@ class AlunoController extends Controller
 		$aluno->nome = $request->get("nome");
 		$aluno->email = $request->get("email");
 		$aluno->curso_id = $request->get("curso_id");
+		
+		if ($request->file("foto") != null){
+			$aluno->foto = $request->file("foto")->store("public/alunos");
+		}
+		
 		$aluno->save();
 		
 		$request->session()->flash("status", "salvo");

@@ -5,7 +5,8 @@
 @section("formulario")
 	</br>
 	<h1>Cadastro de Alunos</h1>
-	<form method="POST" action="/aluno" class="row">
+	<form method="POST" action="/aluno" class="row" enctype =
+	"multipart/form-data">
 		<div class="form-group col-6">
 			<label for="nome">Nome:</label>
 			<input type="text" id="nome" name="nome" class=
@@ -32,7 +33,7 @@
 		</div>
 		<div class="form-group col-4">
 			<label for="foto">Foto:</label>
-			<input type="file" id="foto" class=
+			<input type="file" id="foto" name="foto" class=
 			"form-control" />
 		</div>
 		<div class="form-group col-2">
@@ -73,7 +74,13 @@
 				<tr>
 					<td>{{$aluno->nome}}</td>
 					<td>{{$aluno->nome_curso}}</td>
-					<td></td>
+					<td>
+					@if($aluno->foto != null)
+						<img src='{{str_replace ("public/", "storage/", 
+						$aluno->foto) }}' width=
+						"300"></img>
+					@endif
+					</td>
 					<td>
 						<a href="/aluno/{{ $aluno->id }}/edit" class="btn btn-warning">
 							<i class="bi bi-pencil-square"></i> Editar
